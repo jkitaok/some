@@ -5,8 +5,9 @@ Build custom LLM-powered structured object and media extraction pipelines using 
 ## Core Components
 
 - **BaseLanguageModel** (`some/inference.py`): Handles batch generation and provider abstraction
-- **BasePromptBuilder** (`some/prompting.py`): Builds model inputs with:
-  - `messages`: Chat messages for the LLM
+- **BasePromptBuilder** (`some/prompting.py`): Builds model-agnostic prompt inputs with:
+  - `prompt_text`: Formatted text prompt
+  - `image_path`: Optional path to image file
   - `response_format`: Pydantic model for structured output
   - `result_key`: Key name for storing results
 
@@ -32,7 +33,7 @@ from some.prompting import BasePromptBuilder
 class ProductPrompt(BasePromptBuilder):
     def build(self, item):
         return {
-            "messages": [{"role": "user", "content": f"Extract product info: {item['text']}"}],
+            "prompt_text": f"Extract product info: {item['text']}",
             "response_format": Product,
             "result_key": "product"
         }

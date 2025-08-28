@@ -79,17 +79,14 @@ class TestBasePromptBuilder(unittest.TestCase):
         class SimplePromptBuilder(BasePromptBuilder):
             def build(self, item: Dict[str, Any]) -> Dict[str, Any]:
                 return {
-                    "messages": [{"role": "user", "content": item["text"]}],
+                    "prompt_text": item["text"],
                     "result_key": "simple_result"
                 }
-        
+
         class ComplexPromptBuilder(BasePromptBuilder):
             def build(self, item: Dict[str, Any]) -> Dict[str, Any]:
                 return {
-                    "messages": [
-                        {"role": "system", "content": "You are a helpful assistant."},
-                        {"role": "user", "content": f"Analyze: {item['text']}"}
-                    ],
+                    "prompt_text": f"You are a helpful assistant. Analyze: {item['text']}",
                     "response_format": item.get("schema"),
                     "result_key": "analysis"
                 }

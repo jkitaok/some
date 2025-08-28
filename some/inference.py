@@ -62,6 +62,21 @@ class BaseLanguageModel(ABC):
         self.model_id: Optional[str] = model
 
     @abstractmethod
+    def build_messages(self, prompt_data: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Convert generic prompt data to model-specific message format.
+
+        Args:
+            prompt_data: Dict containing:
+                - prompt_text: str - The formatted text prompt
+                - image_path: Optional[str] - Local path to image file if needed
+                - response_format: Optional[BaseModel] - Pydantic model for structured output
+                - result_key: str - Key name for storing results
+
+        Returns:
+            List of message dicts in the format expected by this language model's API
+        """
+
+    @abstractmethod
     def generate(
         self,
         inputs: List[Dict[str, Any]],
@@ -94,8 +109,47 @@ class OpenAILanguageModel(BaseLanguageModel):
         if self.model_id is None:
             self.model_id = os.getenv("OPENAI_MODEL", get_default_model("openai") or "gpt-5-nano")
 
+    def build_messages(self, prompt_data: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Convert generic prompt data to OpenAI message format."""
+        from .media import encode_base64_content_from_path, get_image_mime_type
+
+        prompt_text = prompt_data.get("prompt_text", "")
+        image_path = prompt_data.get("image_path")
+
+        if image_path:
+            # Handle multimodal content (text + image)
+            base64_image = encode_base64_content_from_path(image_path)
+            mime_type = get_image_mime_type(image_path)
+
+            return [
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": prompt_text
+                        },
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:{mime_type};base64,{base64_image}"
+                            }
+                        }
+                    ]
+                }
+            ]
+        else:
+            # Text-only content
+            return [
+                {
+                    "role": "user",
+                    "content": prompt_text
+                }
+            ]
+
     def _generate_single(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        messages: List[Dict[str, str]] = payload.get("messages", [])
+        # Build messages using the new format
+        messages = self.build_messages(payload)
         response_format = payload.get("response_format")  # prompt builders should supply when structured output is desired
         result_key = payload.get("result_key", "result")
 
@@ -164,8 +218,47 @@ class OllamaLanguageModel(BaseLanguageModel):
         if self.model_id is None:
             self.model_id = os.getenv("OLLAMA_MODEL", get_default_model("ollama") or "qwen3:4b-instruct")
 
+    def build_messages(self, prompt_data: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Convert generic prompt data to Ollama message format (OpenAI-compatible)."""
+        from .media import encode_base64_content_from_path, get_image_mime_type
+
+        prompt_text = prompt_data.get("prompt_text", "")
+        image_path = prompt_data.get("image_path")
+
+        if image_path:
+            # Handle multimodal content (text + image) - same format as OpenAI
+            base64_image = encode_base64_content_from_path(image_path)
+            mime_type = get_image_mime_type(image_path)
+
+            return [
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": prompt_text
+                        },
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:{mime_type};base64,{base64_image}"
+                            }
+                        }
+                    ]
+                }
+            ]
+        else:
+            # Text-only content
+            return [
+                {
+                    "role": "user",
+                    "content": prompt_text
+                }
+            ]
+
     def _generate_single(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        messages: List[Dict[str, str]] = payload.get("messages", [])
+        # Build messages using the new format
+        messages = self.build_messages(payload)
         response_format = payload.get("response_format")  # prompt builders should supply when structured output is desired
         result_key = payload.get("result_key", "result")
 

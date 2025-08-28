@@ -34,7 +34,7 @@ export OPENAI_API_KEY=your_key_here
 
 ### Step 2: Run the example
 ```bash
-python -m some.examples.generic_extraction.run_my_extraction
+python -m some.examples.generic_extraction.run_extraction
 ```
 
 **What this does:**
@@ -67,7 +67,7 @@ from some.prompting import BasePromptBuilder
 class ProductPrompt(BasePromptBuilder):
     def build(self, item):
         return {
-            "messages": [{"role": "user", "content": f"Extract product info: {item['text']}"}],
+            "prompt_text": f"Extract product info: {item['text']}",
             "response_format": Product,
             "result_key": "product"
         }

@@ -18,10 +18,11 @@ A starter code template for LLM-powered structured object and media extraction w
 pip install -e .
 ```
 
-## Try It Now
+## 🚀 Quickstart
 
-Run the complete example to see structured extraction in action:
+Get up and running in 30 seconds! Run the complete example to see structured extraction in action:
 
+### Step 1: Set up your API key
 ```bash
 # Option 1: Copy and configure environment file
 cp .env.example .env
@@ -29,16 +30,20 @@ cp .env.example .env
 
 # Option 2: Set environment variable directly
 export OPENAI_API_KEY=your_key_here
+```
 
-# Run the example
+### Step 2: Run the example
+```bash
 python -m extraction.examples.generic_extraction.run_my_extraction
 ```
 
-This will:
-- Extract product information from sample text
-- Evaluate extraction quality
-- Show comprehensive metrics and cost analysis
-- Demonstrate the full pipeline with real LLM calls
+**What this does:**
+- ✅ Extracts product information from sample text using GPT
+- ✅ Evaluates extraction quality automatically
+- ✅ Shows comprehensive metrics and cost analysis
+- ✅ Demonstrates the complete pipeline with real LLM calls
+
+**Expected output:** You'll see extracted product data, quality evaluations, performance metrics, and cost analysis - everything you need to understand how SOME works!
 
 ## Quick Start
 

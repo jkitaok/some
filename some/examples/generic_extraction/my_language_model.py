@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional, Tuple
 import time
 
-from extraction import BaseLanguageModel, register_language_model
+from some import BaseLanguageModel, register_language_model
 
 
 class CustomLanguageModel(BaseLanguageModel):

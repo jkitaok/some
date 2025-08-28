@@ -1,5 +1,5 @@
 """
-Unit tests for extraction/cli.py module.
+Unit tests for some/cli.py module.
 
 Tests the CLI functionality (which has been disabled).
 """
@@ -16,17 +16,17 @@ class TestCLI(unittest.TestCase):
     @patch('builtins.print')
     def test_main_shows_removal_message(self, mock_print, mock_exit):
         """Test that main() shows CLI removal message and exits."""
-        from extraction.cli import main
+        from some.cli import main
         
         main([])
         
         # Should print removal messages
         expected_calls = [
             unittest.mock.call("CLI functionality has been removed from this package."),
-            unittest.mock.call("Please use the extraction modules directly in your Python code."),
+            unittest.mock.call("Please use the some modules directly in your Python code."),
             unittest.mock.call("Example:"),
-            unittest.mock.call("  from extraction.inference import get_language_model"),
-            unittest.mock.call("  from extraction.prompting import BasePromptBuilder")
+            unittest.mock.call("  from some.inference import get_language_model"),
+            unittest.mock.call("  from some.prompting import BasePromptBuilder")
         ]
         mock_print.assert_has_calls(expected_calls)
         
@@ -37,7 +37,7 @@ class TestCLI(unittest.TestCase):
     @patch('builtins.print')
     def test_main_with_argv_none(self, mock_print, mock_exit):
         """Test main() with argv=None uses sys.argv."""
-        from extraction.cli import main
+        from some.cli import main
         
         with patch('sys.argv', ['cli.py', 'some', 'args']):
             main(None)
@@ -50,7 +50,7 @@ class TestCLI(unittest.TestCase):
     @patch('builtins.print')
     def test_main_with_custom_argv(self, mock_print, mock_exit):
         """Test main() with custom argv."""
-        from extraction.cli import main
+        from some.cli import main
         
         main(['custom', 'args'])
         
@@ -58,7 +58,7 @@ class TestCLI(unittest.TestCase):
         mock_print.assert_called()
         mock_exit.assert_called_once_with(1)
 
-    @patch('extraction.cli.main')
+    @patch('some.cli.main')
     def test_main_module_execution(self, mock_main):
         """Test that __main__ execution calls main()."""
         # This tests the if __name__ == "__main__": block
@@ -69,7 +69,7 @@ class TestCLI(unittest.TestCase):
 
     def test_main_function_signature(self):
         """Test that main function has correct signature."""
-        from extraction.cli import main
+        from some.cli import main
         import inspect
         
         sig = inspect.signature(main)

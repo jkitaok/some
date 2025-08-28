@@ -13,7 +13,7 @@ class TestBasePromptBuilder(unittest.TestCase):
 
     def test_base_prompt_builder_is_abstract(self):
         """Test that BasePromptBuilder cannot be instantiated directly."""
-        from extraction.prompting import BasePromptBuilder
+        from some.prompting import BasePromptBuilder
         
         # Should be able to instantiate since build() has a default implementation
         # that raises NotImplementedError
@@ -22,7 +22,7 @@ class TestBasePromptBuilder(unittest.TestCase):
 
     def test_build_method_raises_not_implemented(self):
         """Test that build method raises NotImplementedError by default."""
-        from extraction.prompting import BasePromptBuilder
+        from some.prompting import BasePromptBuilder
         
         builder = BasePromptBuilder()
         
@@ -31,7 +31,7 @@ class TestBasePromptBuilder(unittest.TestCase):
 
     def test_concrete_implementation_works(self):
         """Test that concrete implementation of BasePromptBuilder works."""
-        from extraction.prompting import BasePromptBuilder
+        from some.prompting import BasePromptBuilder
         
         class ConcretePromptBuilder(BasePromptBuilder):
             def build(self, item: Dict[str, Any]) -> Dict[str, Any]:
@@ -55,7 +55,7 @@ class TestBasePromptBuilder(unittest.TestCase):
 
     def test_build_method_signature(self):
         """Test that build method has correct signature."""
-        from extraction.prompting import BasePromptBuilder
+        from some.prompting import BasePromptBuilder
         import inspect
         
         sig = inspect.signature(BasePromptBuilder.build)
@@ -74,7 +74,7 @@ class TestBasePromptBuilder(unittest.TestCase):
 
     def test_multiple_concrete_implementations(self):
         """Test multiple concrete implementations of BasePromptBuilder."""
-        from extraction.prompting import BasePromptBuilder
+        from some.prompting import BasePromptBuilder
         
         class SimplePromptBuilder(BasePromptBuilder):
             def build(self, item: Dict[str, Any]) -> Dict[str, Any]:
@@ -116,7 +116,7 @@ class TestBasePromptBuilder(unittest.TestCase):
 
     def test_builder_with_empty_item(self):
         """Test builder behavior with empty item."""
-        from extraction.prompting import BasePromptBuilder
+        from some.prompting import BasePromptBuilder
         
         class EmptyHandlingBuilder(BasePromptBuilder):
             def build(self, item: Dict[str, Any]) -> Dict[str, Any]:
@@ -133,7 +133,7 @@ class TestBasePromptBuilder(unittest.TestCase):
 
     def test_builder_with_none_values(self):
         """Test builder behavior with None values in item."""
-        from extraction.prompting import BasePromptBuilder
+        from some.prompting import BasePromptBuilder
         
         class NoneHandlingBuilder(BasePromptBuilder):
             def build(self, item: Dict[str, Any]) -> Dict[str, Any]:
@@ -153,7 +153,7 @@ class TestBasePromptBuilder(unittest.TestCase):
 
     def test_builder_inheritance_chain(self):
         """Test inheritance chain with BasePromptBuilder."""
-        from extraction.prompting import BasePromptBuilder
+        from some.prompting import BasePromptBuilder
         
         class MiddleBuilder(BasePromptBuilder):
             def build(self, item: Dict[str, Any]) -> Dict[str, Any]:
@@ -173,7 +173,7 @@ class TestBasePromptBuilder(unittest.TestCase):
 
     def test_docstring_exists(self):
         """Test that BasePromptBuilder has proper docstring."""
-        from extraction.prompting import BasePromptBuilder
+        from some.prompting import BasePromptBuilder
         
         self.assertIsNotNone(BasePromptBuilder.__doc__)
         self.assertIn("Generic interface", BasePromptBuilder.__doc__)

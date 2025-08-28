@@ -34,7 +34,7 @@ export OPENAI_API_KEY=your_key_here
 
 ### Step 2: Run the example
 ```bash
-python -m extraction.examples.generic_extraction.run_my_extraction
+python -m some.examples.generic_extraction.run_my_extraction
 ```
 
 **What this does:**
@@ -62,7 +62,7 @@ class Product(BaseModel):
 ### 2. Create a Prompt Builder
 
 ```python
-from extraction.prompting import BasePromptBuilder
+from some.prompting import BasePromptBuilder
 
 class ProductPrompt(BasePromptBuilder):
     def build(self, item):
@@ -76,7 +76,7 @@ class ProductPrompt(BasePromptBuilder):
 ### 3. Run Extraction
 
 ```python
-from extraction.inference import get_language_model
+from some.inference import get_language_model
 
 # Set up data and model
 data = [{"text": "Widget X costs $19.99 with wifi and bluetooth"}]
@@ -99,9 +99,9 @@ print(results[0]["product"])  # {"name": "Widget X", "price": 19.99, ...}
 
 ## Examples & Documentation
 
-- **`extraction/examples/generic_extraction/`** - Complete working example (try the command above!)
-- **`extraction/examples/custom_llm_provider/`** - Custom provider implementation
-- **`extraction/examples/multimodal_extraction/`** - Media and multimodal content handling
+- **`some/examples/generic_extraction/`** - Complete working example (try the command above!)
+- **`some/examples/custom_llm_provider/`** - Custom provider implementation
+- **`some/examples/multimodal_extraction/`** - Media and multimodal content handling
 - **`docs/DEVELOPER_GUIDE.md`** - Build custom extraction pipelines
 - **`docs/SCHEMA_METRICS.md`** - Analyze extracted data quality
 
@@ -109,7 +109,7 @@ print(results[0]["product"])  # {"name": "Widget X", "price": 19.99, ...}
 
 This template provides everything you need to build structured extraction systems:
 
-1. **Clone and customize** the schemas in `extraction/examples/`
+1. **Clone and customize** the schemas in `some/examples/`
 2. **Modify prompts** to match your specific extraction needs
 3. **Add your data sources** and run extractions
 4. **Analyze results** with built-in metrics and validation

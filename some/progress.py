@@ -2,7 +2,7 @@
 Progress utilities for colorful CLI progress bars using tqdm.
 
 Goals:
-- Easy to use when gathering page content (iterating papers)
+- Easy to use when processing data collections (iterating items)
 - Easy to use alongside language model batch generation (generate())
 - Colorful output that looks good in typical terminals
 
@@ -11,22 +11,22 @@ Usage examples
 
 1) Wrap a simple iterable
 
-    from paperscraper.progress import progress_iterable
-    for paper in progress_iterable(papers, desc="Pages", unit="paper", colour="cyan"):
+    from some.progress import progress_iterable
+    for item in progress_iterable(items, desc="Processing", unit="item", colour="cyan"):
         ...
 
 2) Manual bar for custom loops
 
-    from paperscraper.progress import progress_bar
-    with progress_bar(total=len(papers), desc="Pages", unit="paper", colour="cyan") as pbar:
-        for p in papers:
+    from some.progress import progress_bar
+    with progress_bar(total=len(items), desc="Processing", unit="item", colour="cyan") as pbar:
+        for item in items:
             ... # work
             pbar.update(1)
 
 3) Use with concurrent futures (e.g., inside a provider's generate())
 
     from concurrent.futures import ThreadPoolExecutor
-    from paperscraper.progress import as_completed_with_tqdm
+    from some.progress import as_completed_with_tqdm
 
     with ThreadPoolExecutor(max_workers=workers) as ex:
         futures = [ex.submit(task, i, item) for i, item in enumerate(inputs)]
@@ -128,7 +128,7 @@ def progress_iterable(
     - desc: left-hand description (will be colorized)
     - total: explicit total; if None, will attempt to infer from len()
     - colour: tqdm bar color (e.g., "cyan", "magenta", "green")
-    - unit: unit label (e.g., "paper", "item")
+    - unit: unit label (e.g., "item", "record")
     - leave: whether to leave the bar on screen after completion
     - position: bar row to use (auto: 0 when verbose, else None)
     """
@@ -235,18 +235,6 @@ def as_completed_with_tqdm(
 
 
 # Convenience presets for common tasks --------------------------------------
-
-def pages_progress(papers: Sequence[dict]) -> tqdm:
-    """Preset bar for page gathering step.
-
-    Usage:
-        with pages_progress(papers) as pbar:
-            for paper in papers:
-                ...
-                pbar.update(1)
-    """
-    return progress_bar(total=len(papers), desc="Fetching pages", unit="paper", colour="cyan")
-
 
 def llm_progress(num_items: int) -> tqdm:
     """Preset bar for LLM batch generation step (by count of inputs)."""

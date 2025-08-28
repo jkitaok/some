@@ -7,14 +7,10 @@ CLI functionality has been removed - use these functions directly in your Python
 from __future__ import annotations
 
 import importlib
-import json
 import logging
-import os
-import sys
-import time
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
-from extraction.io import read_json
+from typing import Any, Dict, List
+from some.io import read_json, write_json, read_jsonl, write_jsonl
 
 
 def configure_logging(verbosity: int) -> None:
@@ -36,7 +32,7 @@ def configure_logging(verbosity: int) -> None:
 
     if verbosity > 0:
         try:
-            from extraction.progress import TqdmLoggingHandler
+            from some.progress import TqdmLoggingHandler
             handler = TqdmLoggingHandler()
         except Exception:
             handler = logging.StreamHandler()
@@ -55,13 +51,8 @@ def load_data_from_file(file_path: str) -> List[Dict[str, Any]]:
         raise FileNotFoundError(f"Input file not found: {file_path}")
 
     if path.suffix.lower() == '.jsonl':
-        items = []
-        with open(path, 'r', encoding='utf-8') as f:
-            for line in f:
-                line = line.strip()
-                if line:
-                    items.append(json.loads(line))
-        return items
+        # Use the centralized read_jsonl function from io.py
+        return read_jsonl(file_path)
     elif path.suffix.lower() == '.json':
         data = read_json(file_path)
         if isinstance(data, list):
@@ -89,19 +80,14 @@ def load_prompt_builder_class(module_path: str, class_name: str):
         raise AttributeError(f"Class '{class_name}' not found in module '{module_path}': {e}")
 
 
-def save_results(results: List[Dict[str, Any]], output_path: str, format: str = "json", include_prompts: bool = False) -> None:
-    """Save extraction results to file, optionally including prompts for evaluation."""
-    output_path_obj = Path(output_path)
-    if output_path_obj.parent != Path('.'):  # Only create parent dirs if not current directory
-        output_path_obj.parent.mkdir(parents=True, exist_ok=True)
-
+def save_results(results: List[Dict[str, Any]], output_path: str, format: str = "json") -> None:
+    """Save extraction results to file."""
     if format.lower() == "jsonl":
-        with open(output_path_obj, 'w', encoding='utf-8') as f:
-            for result in results:
-                f.write(json.dumps(result, ensure_ascii=False) + '\n')
+        # Use the centralized write_jsonl function from io.py
+        write_jsonl(output_path, results)
     else:  # json
-        with open(output_path_obj, 'w', encoding='utf-8') as f:
-            json.dump(results, f, ensure_ascii=False, indent=2)
+        # Use the centralized write_json function from io.py
+        write_json(output_path, results)
 
 
 def save_evaluation_data(inputs: List[Dict[str, Any]], results: List[Dict[str, Any]], output_path: str) -> None:
@@ -123,25 +109,6 @@ def save_evaluation_data(inputs: List[Dict[str, Any]], results: List[Dict[str, A
         }
         evaluation_data.append(eval_record)
 
-    output_path_obj = Path(output_path)
-    if output_path_obj.parent != Path('.'):
-        output_path_obj.parent.mkdir(parents=True, exist_ok=True)
+    # Use the centralized write_json function from io.py
+    write_json(output_path, evaluation_data)
 
-    with open(output_path_obj, 'w', encoding='utf-8') as f:
-        json.dump(evaluation_data, f, ensure_ascii=False, indent=2)
-
-
-
-
-
-# CLI functionality has been removed - cmd_extract function is no longer available
-# Use the utility functions in this module directly in your Python code
-
-
-
-
-
-
-
-# CLI functionality has been removed - build_parser and main functions are no longer available
-# Use the utility functions in this module directly in your Python code

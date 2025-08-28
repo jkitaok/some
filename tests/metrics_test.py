@@ -13,7 +13,7 @@ from unittest.mock import patch, MagicMock
 
 try:
     from pydantic import BaseModel
-    from extraction.metrics import SchemaMetricsCollector
+    from some.metrics import SchemaMetricsCollector
     PYDANTIC_AVAILABLE = True
 except ImportError:
     PYDANTIC_AVAILABLE = False
@@ -26,14 +26,14 @@ class TestBaseMetricsCollector(unittest.TestCase):
 
     def test_base_metrics_collector_is_abstract(self):
         """Test that BaseMetricsCollector cannot be instantiated directly."""
-        from extraction.metrics import BaseMetricsCollector
+        from some.metrics import BaseMetricsCollector
         
         with self.assertRaises(TypeError):
             BaseMetricsCollector()
 
     def test_abstract_methods_exist(self):
         """Test that abstract methods are defined."""
-        from extraction.metrics import BaseMetricsCollector
+        from some.metrics import BaseMetricsCollector
         
         # Create a concrete subclass without implementing abstract methods
         class IncompleteCollector(BaseMetricsCollector):
@@ -48,7 +48,7 @@ class TestLLMMetricsCollector(unittest.TestCase):
 
     def setUp(self):
         """Set up test fixtures."""
-        from extraction.metrics import LLMMetricsCollector
+        from some.metrics import LLMMetricsCollector
         self.collector = LLMMetricsCollector(
             name="test_extraction",
             cost_per_input_token=0.001,
@@ -142,7 +142,7 @@ class TestCreateMetricsCollector(unittest.TestCase):
 
     def test_create_standard_collector(self):
         """Test creating standard metrics collector."""
-        from extraction.metrics import create_metrics_collector, LLMMetricsCollector
+        from some.metrics import create_metrics_collector, LLMMetricsCollector
         
         collector = create_metrics_collector(
             collector_type="standard",
@@ -158,7 +158,7 @@ class TestCreateMetricsCollector(unittest.TestCase):
 
     def test_create_unknown_collector_raises_error(self):
         """Test creating unknown collector type raises ValueError."""
-        from extraction.metrics import create_metrics_collector
+        from some.metrics import create_metrics_collector
         
         with self.assertRaises(ValueError) as context:
             create_metrics_collector(collector_type="unknown")
@@ -167,7 +167,7 @@ class TestCreateMetricsCollector(unittest.TestCase):
 
     def test_create_collector_default_values(self):
         """Test creating collector with default values."""
-        from extraction.metrics import create_metrics_collector, LLMMetricsCollector
+        from some.metrics import create_metrics_collector, LLMMetricsCollector
 
         collector = create_metrics_collector()
 
@@ -182,8 +182,8 @@ class TestSaveMetricsJson(unittest.TestCase):
 
     def test_save_metrics_json(self):
         """Test saving metrics to JSON file."""
-        from extraction.metrics import save_metrics_json
-        from extraction.io import read_json
+        from some.metrics import save_metrics_json
+        from some.io import read_json
         
         test_metrics = {
             "total_items": 5,
@@ -207,8 +207,8 @@ class TestSaveMetricsJson(unittest.TestCase):
 
     def test_save_metrics_json_creates_directories(self):
         """Test that save_metrics_json creates parent directories."""
-        from extraction.metrics import save_metrics_json
-        from extraction.io import read_json
+        from some.metrics import save_metrics_json
+        from some.io import read_json
         
         test_metrics = {"test": "data"}
         
@@ -557,7 +557,7 @@ class TestCreateMetricsCollectorUpdated(unittest.TestCase):
         if not PYDANTIC_AVAILABLE:
             self.skipTest("Pydantic not available")
 
-        from extraction.metrics import create_metrics_collector
+        from some.metrics import create_metrics_collector
 
         class TestSchema(BaseModel):
             name: str
@@ -578,7 +578,7 @@ class TestCreateMetricsCollectorUpdated(unittest.TestCase):
         if not PYDANTIC_AVAILABLE:
             self.skipTest("Pydantic not available")
 
-        from extraction.metrics import create_metrics_collector
+        from some.metrics import create_metrics_collector
 
         with self.assertRaises(ValueError) as context:
             create_metrics_collector(collector_type="schema")

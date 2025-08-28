@@ -1,7 +1,7 @@
 """
-Example of using the extraction library for structured data extraction.
+Example of using the some library for structured data extraction.
 
-This demonstrates how to use the extraction package as a library without CLI functionality.
+This demonstrates how to use the some package as a library without CLI functionality.
 Run this as a Python module or import the functions for use in your own code.
 """
 from __future__ import annotations
@@ -9,8 +9,8 @@ from __future__ import annotations
 import os
 from typing import Dict, Any
 
-from extraction.inference import get_language_model
-from extraction.metrics import LLMMetricsCollector, SchemaMetricsCollector
+from some.inference import get_language_model
+from some.metrics import LLMMetricsCollector, SchemaMetricsCollector
 from .my_schema import BasicEvaluation
 from .my_prompt import ProductPrompt, EvaluationPrompt
 from .my_language_model import CustomLanguageModel  # Import triggers registration as "custom" provider

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from concurrent.futures import ThreadPoolExecutor
-from extraction.progress import as_completed_with_tqdm
+from some.progress import as_completed_with_tqdm
 from typing import Any, Dict, List, Optional, Tuple, Callable
 import logging
 import os
@@ -25,7 +25,7 @@ def register_language_model(name: str, factory: Callable[..., "BaseLanguageModel
     """Register a language model factory under a provider name.
 
     Example:
-        from paperscraper.inference import register_language_model, BaseLanguageModel
+        from some.inference import register_language_model, BaseLanguageModel
 
         class MyLM(BaseLanguageModel):
             ...
@@ -51,7 +51,7 @@ def get_default_model(provider: str) -> Optional[str]:
 
 
 class BaseLanguageModel(ABC):
-    """Abstract interface for language models used by paperscraper.
+    """Abstract interface for language models used by the extraction system.
 
     Implementors fill in `generate` using the provider's API. All models expose
     a `model_id` attribute set during __init__, never in `generate`.

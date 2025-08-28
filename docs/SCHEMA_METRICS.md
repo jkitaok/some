@@ -15,7 +15,7 @@ Automatic analysis of structured data against Pydantic schemas with comprehensiv
 ```python
 from pydantic import BaseModel
 from typing import List, Optional
-from extraction.metrics import SchemaMetricsCollector
+from some.metrics import SchemaMetricsCollector
 
 # Define schema
 class Product(BaseModel):
@@ -34,7 +34,7 @@ print(collector.format_summary(metrics))
 
 ### Factory Function
 ```python
-from extraction.metrics import create_metrics_collector
+from some.metrics import create_metrics_collector
 
 collector = create_metrics_collector(
     collector_type="schema",
@@ -98,7 +98,7 @@ for field, stats in metrics["field_metrics"].items():
 
 ```python
 # Save results
-from extraction.metrics import save_metrics_json
+from some.metrics import save_metrics_json
 save_metrics_json(metrics, "results.json")
 
 # Timing support

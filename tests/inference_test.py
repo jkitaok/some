@@ -14,14 +14,14 @@ class TestBaseLanguageModel(unittest.TestCase):
 
     def test_base_language_model_is_abstract(self):
         """Test that BaseLanguageModel cannot be instantiated directly."""
-        from extraction.inference import BaseLanguageModel
+        from some.inference import BaseLanguageModel
         
         with self.assertRaises(TypeError):
             BaseLanguageModel()
 
     def test_generate_method_is_abstract(self):
         """Test that generate method is abstract."""
-        from extraction.inference import BaseLanguageModel
+        from some.inference import BaseLanguageModel
         
         # Create a concrete subclass without implementing generate
         class IncompleteModel(BaseLanguageModel):
@@ -37,12 +37,12 @@ class TestLanguageModelRegistry(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures."""
         # Clear registry before each test
-        from extraction.inference import LANGUAGE_MODEL_REGISTRY
+        from some.inference import LANGUAGE_MODEL_REGISTRY
         LANGUAGE_MODEL_REGISTRY.clear()
 
     def test_register_language_model(self):
         """Test registering a language model."""
-        from extraction.inference import register_language_model, LANGUAGE_MODEL_REGISTRY
+        from some.inference import register_language_model, LANGUAGE_MODEL_REGISTRY
         
         mock_factory = Mock()
         register_language_model("test_provider", mock_factory)
@@ -52,7 +52,7 @@ class TestLanguageModelRegistry(unittest.TestCase):
 
     def test_register_language_model_case_insensitive(self):
         """Test that registration is case insensitive."""
-        from extraction.inference import register_language_model, LANGUAGE_MODEL_REGISTRY
+        from some.inference import register_language_model, LANGUAGE_MODEL_REGISTRY
         
         mock_factory = Mock()
         register_language_model("TEST_PROVIDER", mock_factory)
@@ -61,14 +61,14 @@ class TestLanguageModelRegistry(unittest.TestCase):
 
     def test_set_default_model(self):
         """Test setting default model for a provider."""
-        from extraction.inference import set_default_model, DEFAULT_MODEL_REGISTRY
+        from some.inference import set_default_model, DEFAULT_MODEL_REGISTRY
         
         set_default_model("openai", "gpt-4")
         self.assertEqual(DEFAULT_MODEL_REGISTRY["openai"], "gpt-4")
 
     def test_set_default_model_case_insensitive(self):
         """Test that set_default_model is case insensitive."""
-        from extraction.inference import set_default_model, DEFAULT_MODEL_REGISTRY
+        from some.inference import set_default_model, DEFAULT_MODEL_REGISTRY
         
         set_default_model("OPENAI", "gpt-4")
         self.assertEqual(DEFAULT_MODEL_REGISTRY["openai"], "gpt-4")
@@ -79,13 +79,13 @@ class TestGetLanguageModel(unittest.TestCase):
 
     def setUp(self):
         """Set up test fixtures."""
-        from extraction.inference import LANGUAGE_MODEL_REGISTRY
+        from some.inference import LANGUAGE_MODEL_REGISTRY
         LANGUAGE_MODEL_REGISTRY.clear()
 
-    @patch('extraction.inference.OpenAILanguageModel')
+    @patch('some.inference.OpenAILanguageModel')
     def test_get_openai_model(self, mock_openai_class):
         """Test getting OpenAI language model."""
-        from extraction.inference import get_language_model
+        from some.inference import get_language_model
         
         mock_instance = Mock()
         mock_openai_class.return_value = mock_instance
@@ -95,10 +95,10 @@ class TestGetLanguageModel(unittest.TestCase):
         mock_openai_class.assert_called_once()
         self.assertEqual(result, mock_instance)
 
-    @patch('extraction.inference.OllamaLanguageModel')
+    @patch('some.inference.OllamaLanguageModel')
     def test_get_ollama_model(self, mock_ollama_class):
         """Test getting Ollama language model."""
-        from extraction.inference import get_language_model
+        from some.inference import get_language_model
         
         mock_instance = Mock()
         mock_ollama_class.return_value = mock_instance
@@ -110,7 +110,7 @@ class TestGetLanguageModel(unittest.TestCase):
 
     def test_get_custom_model(self):
         """Test getting custom registered model."""
-        from extraction.inference import get_language_model, register_language_model
+        from some.inference import get_language_model, register_language_model
         
         mock_factory = Mock()
         mock_instance = Mock()
@@ -125,17 +125,17 @@ class TestGetLanguageModel(unittest.TestCase):
 
     def test_get_unknown_provider_raises_error(self):
         """Test that unknown provider raises ValueError."""
-        from extraction.inference import get_language_model
+        from some.inference import get_language_model
         
         with self.assertRaises(ValueError) as context:
             get_language_model(provider="unknown")
         
         self.assertIn("Unknown provider", str(context.exception))
 
-    @patch('extraction.inference.OpenAILanguageModel')
+    @patch('some.inference.OpenAILanguageModel')
     def test_get_model_with_kwargs(self, mock_openai_class):
         """Test getting model with additional kwargs."""
-        from extraction.inference import get_language_model
+        from some.inference import get_language_model
         
         get_language_model(provider="openai", api_key="test_key", model="gpt-4")
         

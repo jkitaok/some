@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Dict
 
 from .my_schema import ProductSpec, BasicEvaluation
-from extraction.prompting import BasePromptBuilder
+from some.prompting import BasePromptBuilder
 
 class ProductPrompt(BasePromptBuilder):
     def build(self, item: Dict[str, Any]) -> Dict[str, Any]:

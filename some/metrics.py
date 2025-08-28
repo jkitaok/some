@@ -611,11 +611,11 @@ def create_metrics_collector(
 
 def save_metrics_json(metrics: Dict[str, Any], output_path: str) -> None:
     """Save metrics to JSON file."""
-    from extraction.io import write_json
+    from some.io import write_json
     write_json(output_path, metrics)
 
 
 def load_metrics_json(input_path: str) -> Optional[Dict[str, Any]]:
     """Load metrics from JSON file."""
-    from extraction.io import read_json
+    from some.io import read_json
     return read_json(input_path)

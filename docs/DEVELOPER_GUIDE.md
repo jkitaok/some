@@ -4,8 +4,8 @@ Build custom LLM-powered structured object and media extraction pipelines using 
 
 ## Core Components
 
-- **BaseLanguageModel** (`extraction/inference.py`): Handles batch generation and provider abstraction
-- **BasePromptBuilder** (`extraction/prompting.py`): Builds model inputs with:
+- **BaseLanguageModel** (`some/inference.py`): Handles batch generation and provider abstraction
+- **BasePromptBuilder** (`some/prompting.py`): Builds model inputs with:
   - `messages`: Chat messages for the LLM
   - `response_format`: Pydantic model for structured output
   - `result_key`: Key name for storing results
@@ -27,7 +27,7 @@ class Product(BaseModel):
 ### 2. Create Prompt Builder
 
 ```python
-from extraction.prompting import BasePromptBuilder
+from some.prompting import BasePromptBuilder
 
 class ProductPrompt(BasePromptBuilder):
     def build(self, item):
@@ -41,7 +41,7 @@ class ProductPrompt(BasePromptBuilder):
 ### 3. Run Extraction
 
 ```python
-from extraction.inference import get_language_model
+from some.inference import get_language_model
 
 # Prepare data
 items = [{"text": "Widget X costs $19.99 with wifi and GPS"}]
@@ -57,7 +57,7 @@ print(results[0]["product"])
 
 ### Custom Providers
 ```python
-from extraction.inference import BaseLanguageModel, register_language_model
+from some.inference import BaseLanguageModel, register_language_model
 
 class CustomLM(BaseLanguageModel):
     def generate(self, inputs, *, max_workers=None):
@@ -68,7 +68,7 @@ register_language_model("custom", lambda **kw: CustomLM(**kw))
 
 ### Data Analysis
 ```python
-from extraction.metrics import SchemaMetricsCollector
+from some.metrics import SchemaMetricsCollector
 
 collector = SchemaMetricsCollector(Product, "analysis")
 metrics = collector.collect_metrics(extracted_data)
@@ -77,8 +77,8 @@ print(collector.format_summary(metrics))
 
 ### File I/O Utilities
 ```python
-from extraction.main import load_extraction_data
-from extraction.io import write_json
+from some.main import load_extraction_data
+from some.io import write_json
 
 # Load data from JSON, JSONL, or TXT
 data = load_extraction_data("input.json")
@@ -90,7 +90,7 @@ write_json("results.json", extracted_data)
 ## Try the Example
 
 ```bash
-python -m extraction.examples.generic_extraction.run_my_extraction
+python -m some.examples.generic_extraction.run_my_extraction
 ```
 
 This demonstrates the complete pipeline with real LLM calls, metrics, and evaluation.

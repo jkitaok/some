@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Test runner for all extraction package unit tests.
+Test runner for all some package unit tests.
 
 This script runs all unit tests in the tests directory and provides
 a summary of the results.
@@ -10,7 +10,7 @@ import sys
 import os
 from pathlib import Path
 
-# Add the parent directory to the path so we can import extraction modules
+# Add the parent directory to the path so we can import some modules
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 

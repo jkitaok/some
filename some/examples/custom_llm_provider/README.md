@@ -5,13 +5,13 @@ This example shows how to bring your own model provider by implementing `BaseLan
 Two ways to use:
 
 1) Call it from your own Python scripts directly.
-2) Register it under a provider name and use it from the CLI by setting `PAPERSCRAPER_PLUGINS`.
+2) Register it under a provider name and use it in your extraction pipelines.
 
 ## 1) Minimal provider implementation
 
 ```
 from typing import Any, Dict, List, Optional, Tuple
-from paperscraper import BaseLanguageModel
+from some import BaseLanguageModel
 
 class MyLanguageModel(BaseLanguageModel):
     def __init__(self, *, model: Optional[str] = None, **kwargs):
@@ -32,22 +32,25 @@ class MyLanguageModel(BaseLanguageModel):
         return results, 1
 ```
 
-## 2) Registering the provider for CLI use
+## 2) Registering the provider for use in extraction pipelines
 
-Create a small module that registers your provider under a name. Then load it at runtime by setting `PAPERSCRAPER_PLUGINS`.
+Create a small module that registers your provider under a name:
 
 ```
-from paperscraper import register_language_model
+from some import register_language_model
 from .my_provider import MyLanguageModel
 
 register_language_model("myprovider", lambda **kw: MyLanguageModel(**kw))
 ```
 
-Run the CLI with your provider:
+Use your provider in extraction scripts:
 
-```
-PAPERSCRAPER_PLUGINS=paperscraper.examples.custom_llm_provider.register \
-  paperscraper collect cs.AI 2024-01-15 --steps affiliations --provider myprovider -y --num 3
+```python
+from some.inference import get_language_model
+
+# Use your custom provider
+lm = get_language_model(provider="myprovider", model="your-model")
+results, workers, timing = lm.generate(inputs)
 ```
 
-This will route all LLM calls in the affiliations step to your provider.
+This will route all LLM calls to your custom provider.

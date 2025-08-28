@@ -25,7 +25,7 @@ class TestConfigureLogging(unittest.TestCase):
 
     def test_configure_logging_warning_level(self):
         """Test configure_logging with verbosity 0 (WARNING level)."""
-        from extraction.main import configure_logging
+        from some.main import configure_logging
         
         configure_logging(0)
         
@@ -34,7 +34,7 @@ class TestConfigureLogging(unittest.TestCase):
 
     def test_configure_logging_info_level(self):
         """Test configure_logging with verbosity 1 (INFO level)."""
-        from extraction.main import configure_logging
+        from some.main import configure_logging
         
         configure_logging(1)
         
@@ -43,7 +43,7 @@ class TestConfigureLogging(unittest.TestCase):
 
     def test_configure_logging_debug_level(self):
         """Test configure_logging with verbosity 2+ (DEBUG level)."""
-        from extraction.main import configure_logging
+        from some.main import configure_logging
         
         configure_logging(2)
         
@@ -52,7 +52,7 @@ class TestConfigureLogging(unittest.TestCase):
 
     def test_configure_logging_removes_existing_handlers(self):
         """Test that configure_logging removes existing handlers."""
-        from extraction.main import configure_logging
+        from some.main import configure_logging
         
         # Add a dummy handler
         root = logging.getLogger()
@@ -73,7 +73,7 @@ class TestLoadDataFromFile(unittest.TestCase):
 
     def test_load_json_file_list(self):
         """Test loading JSON file containing a list."""
-        from extraction.main import load_data_from_file
+        from some.main import load_data_from_file
         
         test_data = [{"id": 1, "text": "item1"}, {"id": 2, "text": "item2"}]
         
@@ -89,7 +89,7 @@ class TestLoadDataFromFile(unittest.TestCase):
 
     def test_load_json_file_dict(self):
         """Test loading JSON file containing a single dict."""
-        from extraction.main import load_data_from_file
+        from some.main import load_data_from_file
         
         test_data = {"id": 1, "text": "single item"}
         
@@ -105,7 +105,7 @@ class TestLoadDataFromFile(unittest.TestCase):
 
     def test_load_jsonl_file(self):
         """Test loading JSONL file."""
-        from extraction.main import load_data_from_file
+        from some.main import load_data_from_file
         
         test_data = [{"id": 1, "text": "item1"}, {"id": 2, "text": "item2"}]
         
@@ -122,7 +122,7 @@ class TestLoadDataFromFile(unittest.TestCase):
 
     def test_load_txt_file(self):
         """Test loading text file."""
-        from extraction.main import load_data_from_file
+        from some.main import load_data_from_file
         
         test_lines = ["Line 1", "Line 2", "Line 3"]
         expected = [{"text": line} for line in test_lines]
@@ -139,14 +139,14 @@ class TestLoadDataFromFile(unittest.TestCase):
 
     def test_load_nonexistent_file_raises_error(self):
         """Test loading non-existent file raises FileNotFoundError."""
-        from extraction.main import load_data_from_file
+        from some.main import load_data_from_file
         
         with self.assertRaises(FileNotFoundError):
             load_data_from_file("nonexistent.json")
 
     def test_load_unsupported_format_raises_error(self):
         """Test loading unsupported file format raises ValueError."""
-        from extraction.main import load_data_from_file
+        from some.main import load_data_from_file
         
         with tempfile.NamedTemporaryFile(suffix='.xml', delete=False) as f:
             temp_path = f.name
@@ -160,7 +160,7 @@ class TestLoadDataFromFile(unittest.TestCase):
 
     def test_load_invalid_json_type_raises_error(self):
         """Test loading JSON with invalid type raises ValueError."""
-        from extraction.main import load_data_from_file
+        from some.main import load_data_from_file
         
         with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
             json.dump("just a string", f)  # Not list or dict
@@ -179,7 +179,7 @@ class TestLoadPromptBuilderClass(unittest.TestCase):
 
     def test_load_existing_class(self):
         """Test loading an existing class."""
-        from extraction.main import load_prompt_builder_class
+        from some.main import load_prompt_builder_class
         
         # Use a built-in class for testing
         result = load_prompt_builder_class('builtins', 'dict')
@@ -187,14 +187,14 @@ class TestLoadPromptBuilderClass(unittest.TestCase):
 
     def test_load_nonexistent_module_raises_error(self):
         """Test loading from non-existent module raises ImportError."""
-        from extraction.main import load_prompt_builder_class
+        from some.main import load_prompt_builder_class
         
         with self.assertRaises(ImportError):
             load_prompt_builder_class('nonexistent_module', 'SomeClass')
 
     def test_load_nonexistent_class_raises_error(self):
         """Test loading non-existent class raises AttributeError."""
-        from extraction.main import load_prompt_builder_class
+        from some.main import load_prompt_builder_class
         
         with self.assertRaises(AttributeError):
             load_prompt_builder_class('builtins', 'NonExistentClass')

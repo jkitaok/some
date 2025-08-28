@@ -15,7 +15,7 @@ class TestReadJson(unittest.TestCase):
 
     def test_read_existing_json_file(self):
         """Test reading an existing JSON file."""
-        from extraction.io import read_json
+        from some.io import read_json
         
         test_data = {"key": "value", "number": 42}
         
@@ -31,21 +31,21 @@ class TestReadJson(unittest.TestCase):
 
     def test_read_nonexistent_file_returns_default(self):
         """Test reading non-existent file returns default value."""
-        from extraction.io import read_json
+        from some.io import read_json
         
         result = read_json("nonexistent.json", default="default_value")
         self.assertEqual(result, "default_value")
 
     def test_read_nonexistent_file_returns_none(self):
         """Test reading non-existent file returns None when no default."""
-        from extraction.io import read_json
+        from some.io import read_json
         
         result = read_json("nonexistent.json")
         self.assertIsNone(result)
 
     def test_read_invalid_json_returns_default(self):
         """Test reading invalid JSON returns default value."""
-        from extraction.io import read_json
+        from some.io import read_json
         
         with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
             f.write("invalid json content")
@@ -59,7 +59,7 @@ class TestReadJson(unittest.TestCase):
 
     def test_read_empty_file_returns_default(self):
         """Test reading empty file returns default value."""
-        from extraction.io import read_json
+        from some.io import read_json
         
         with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
             temp_path = f.name
@@ -76,7 +76,7 @@ class TestWriteJson(unittest.TestCase):
 
     def test_write_json_file(self):
         """Test writing JSON to file."""
-        from extraction.io import write_json, read_json
+        from some.io import write_json, read_json
         
         test_data = {"key": "value", "list": [1, 2, 3]}
         
@@ -95,7 +95,7 @@ class TestWriteJson(unittest.TestCase):
 
     def test_write_json_creates_directories(self):
         """Test that write_json creates parent directories."""
-        from extraction.io import write_json, read_json
+        from some.io import write_json, read_json
         
         test_data = {"test": "data"}
         
@@ -111,7 +111,7 @@ class TestWriteJson(unittest.TestCase):
 
     def test_write_json_unicode_handling(self):
         """Test that write_json handles Unicode correctly."""
-        from extraction.io import write_json, read_json
+        from some.io import write_json, read_json
         
         test_data = {"unicode": "测试", "emoji": "🚀", "accents": "café"}
         
@@ -134,7 +134,7 @@ class TestReadText(unittest.TestCase):
 
     def test_read_text_file(self):
         """Test reading a text file."""
-        from extraction.io import read_text
+        from some.io import read_text
         
         test_content = "Hello, World!\nThis is a test file.\n"
         
@@ -151,7 +151,7 @@ class TestReadText(unittest.TestCase):
 
     def test_read_text_strips_whitespace(self):
         """Test that read_text strips trailing whitespace."""
-        from extraction.io import read_text
+        from some.io import read_text
         
         test_content = "  Content with whitespace  \n\n  "
         
@@ -167,7 +167,7 @@ class TestReadText(unittest.TestCase):
 
     def test_read_text_unicode(self):
         """Test reading text file with Unicode content."""
-        from extraction.io import read_text
+        from some.io import read_text
         
         test_content = "Unicode test: 测试 🚀 café"
         
@@ -183,7 +183,7 @@ class TestReadText(unittest.TestCase):
 
     def test_read_text_empty_file(self):
         """Test reading empty text file."""
-        from extraction.io import read_text
+        from some.io import read_text
         
         with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
             temp_path = f.name

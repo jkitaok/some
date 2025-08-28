@@ -1,0 +1,132 @@
+[
+  {
+    "id": "text_only_001",
+    "text": "Artificial Intelligence is revolutionizing the way we work and live. From autonomous vehicles to medical diagnosis, AI systems are becoming increasingly sophisticated. However, with great power comes great responsibility. We must ensure that AI development is ethical, transparent, and beneficial for all of humanity. The future of AI depends on how we choose to develop and deploy these powerful technologies today.",
+    "image_path": null,
+    "audio_path": null,
+    "modalities": ["text"],
+    "expected_analysis": {
+      "content_type": "educational",
+      "key_topics": ["Artificial Intelligence", "Ethics", "Technology", "Future"],
+      "sentiment": "optimistic but cautious"
+    }
+  },
+  {
+    "id": "vision_only_001",
+    "text": "Screenshot from a technology presentation",
+    "image_path": "input_dataset/images/tech_presentation.jpg",
+    "audio_path": null,
+    "modalities": ["vision"],
+    "context": "Screenshot from a technology presentation",
+    "expected_analysis": {
+      "content_type": "presentation",
+      "objects_detected": ["laptop", "screen", "presenter", "audience"],
+      "scene_setting": "conference room or auditorium"
+    }
+  },
+  {
+    "id": "audio_only_001",
+    "text": "Historical speech recording",
+    "image_path": null,
+    "audio_path": "https://raw.githubusercontent.com/instructor-ai/instructor/main/tests/assets/gettysburg.wav",
+    "modalities": ["audio"],
+    "context": "Historical speech recording",
+    "expected_analysis": {
+      "content_type": "educational",
+      "speaker_count": 1,
+      "key_topics": ["Civil War", "Democracy", "Memorial"]
+    }
+  },
+  {
+    "id": "text_vision_001",
+    "text": "Welcome to our quarterly product review. Today we'll be discussing the latest features and improvements to our flagship software platform. Our development team has been working tirelessly to enhance user experience and add powerful new capabilities.",
+    "image_path": "input_dataset/images/product_demo.jpg",
+    "audio_path": null,
+    "modalities": ["text", "vision"],
+    "context": "Product presentation slide with accompanying text",
+    "expected_analysis": {
+      "content_type": "product_demo",
+      "text_image_alignment": "complementary",
+      "key_topics": ["Product Review", "Software", "Features"]
+    }
+  },
+  {
+    "id": "text_audio_001",
+    "text": "This podcast episode explores the intersection of technology and creativity. We discuss how AI tools are empowering artists, writers, and musicians to push the boundaries of their craft.",
+    "image_path": null,
+    "audio_path": "https://raw.githubusercontent.com/instructor-ai/instructor/main/tests/assets/gettysburg.wav",
+    "modalities": ["text", "audio"],
+    "context": "Podcast description with audio content",
+    "expected_analysis": {
+      "content_type": "educational",
+      "text_audio_alignment": "complementary",
+      "key_topics": ["Technology", "Creativity", "AI", "Arts"]
+    }
+  },
+  {
+    "id": "vision_audio_001",
+    "text": "Interview recording with visual setup",
+    "image_path": "input_dataset/images/interview_setup.jpg",
+    "audio_path": "https://raw.githubusercontent.com/instructor-ai/instructor/main/tests/assets/gettysburg.wav",
+    "modalities": ["vision", "audio"],
+    "context": "Interview recording with visual setup",
+    "expected_analysis": {
+      "content_type": "interview",
+      "vision_audio_alignment": "complementary",
+      "people_detected": ["interviewer", "interviewee"]
+    }
+  },
+  {
+    "id": "full_multimodal_001",
+    "text": "In this comprehensive tutorial, we demonstrate advanced machine learning techniques using real-world datasets. The presenter walks through code examples while explaining the underlying mathematical concepts.",
+    "image_path": "input_dataset/images/ml_tutorial.jpg",
+    "audio_path": "https://raw.githubusercontent.com/instructor-ai/instructor/main/tests/assets/gettysburg.wav",
+    "modalities": ["text", "vision", "audio"],
+    "context": "Educational video with description, visual slides, and narration",
+    "expected_analysis": {
+      "content_type": "tutorial",
+      "modality_alignment": "highly complementary",
+      "key_topics": ["Machine Learning", "Education", "Programming"],
+      "unique_insights": ["Code walkthrough with visual and audio explanation"]
+    }
+  },
+  {
+    "id": "news_report_001",
+    "text": "Breaking: Major breakthrough in renewable energy technology announced today. Scientists have developed a new solar panel design that increases efficiency by 40% while reducing manufacturing costs.",
+    "image_path": "input_dataset/images/solar_panels.jpg",
+    "audio_path": "https://raw.githubusercontent.com/instructor-ai/instructor/main/tests/assets/gettysburg.wav",
+    "modalities": ["text", "vision", "audio"],
+    "context": "News report with headline, image, and audio narration",
+    "expected_analysis": {
+      "content_type": "news_report",
+      "key_topics": ["Renewable Energy", "Solar Technology", "Scientific Breakthrough"],
+      "modality_alignment": "reinforcing"
+    }
+  },
+  {
+    "id": "product_advertisement_001",
+    "text": "Introducing the revolutionary SmartHome Hub - your gateway to the connected home of the future. Control lights, temperature, security, and entertainment with simple voice commands.",
+    "image_path": "input_dataset/images/smart_home_device.jpg",
+    "audio_path": "https://raw.githubusercontent.com/instructor-ai/instructor/main/tests/assets/gettysburg.wav",
+    "modalities": ["text", "vision", "audio"],
+    "context": "Product advertisement with marketing copy, product image, and promotional audio",
+    "expected_analysis": {
+      "content_type": "advertisement",
+      "key_topics": ["Smart Home", "Technology", "Voice Control"],
+      "modality_alignment": "promotional and reinforcing"
+    }
+  },
+  {
+    "id": "documentary_segment_001",
+    "text": "The Amazon rainforest, often called the 'lungs of the Earth,' plays a crucial role in regulating our planet's climate. This vast ecosystem is home to millions of species, many still undiscovered by science.",
+    "image_path": "input_dataset/images/rainforest.jpg",
+    "audio_path": "https://raw.githubusercontent.com/instructor-ai/instructor/main/tests/assets/gettysburg.wav",
+    "modalities": ["text", "vision", "audio"],
+    "context": "Documentary segment about environmental conservation",
+    "expected_analysis": {
+      "content_type": "documentary",
+      "key_topics": ["Environment", "Amazon", "Climate", "Biodiversity"],
+      "modality_alignment": "educational and immersive"
+    }
+  }
+]

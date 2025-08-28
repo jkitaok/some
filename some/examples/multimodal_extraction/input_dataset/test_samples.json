@@ -1,0 +1,16 @@
+[
+  {
+    "id": "test_text_001",
+    "text": "Artificial Intelligence is transforming industries across the globe. From healthcare to finance, AI systems are enabling new capabilities and improving efficiency. However, the rapid advancement of AI also raises important questions about ethics, privacy, and the future of work.",
+    "image_path": null,
+    "audio_path": null,
+    "context": "Test text for text-only extraction"
+  },
+  {
+    "id": "test_text_vision_001", 
+    "text": "This image shows a professional headshot of a person in business attire. The photo appears to be taken in a studio setting with professional lighting, suggesting it might be used for corporate or promotional purposes.",
+    "image_path": "rdj.jpg",
+    "audio_path": null,
+    "context": "Test text and vision combination"
+  }
+]

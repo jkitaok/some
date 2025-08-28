@@ -1,0 +1,92 @@
+[
+  {
+    "id": "audio_001",
+    "text": "Historical speech recording - The Gettysburg Address",
+    "image_path": null,
+    "audio_path": "https://raw.githubusercontent.com/instructor-ai/instructor/main/tests/assets/gettysburg.wav",
+    "expected_type": "speech",
+    "context": "Historical speech recording - The Gettysburg Address",
+    "expected_content": {
+      "audio_type": "speech",
+      "speaker_count": 1,
+      "main_topics": ["Civil War", "Gettysburg", "dedication", "democracy"],
+      "language": "English",
+      "historical_significance": "Famous speech by Abraham Lincoln"
+    }
+  },
+  {
+    "id": "audio_002",
+    "text": "Weekly team standup meeting",
+    "image_path": null,
+    "audio_path": "input_dataset/audio_files/team_meeting.wav",
+    "expected_type": "meeting",
+    "context": "Weekly team standup meeting",
+    "expected_content": {
+      "audio_type": "meeting",
+      "meeting_type": "standup",
+      "participants": ["Sarah", "Mike", "Jennifer"],
+      "agenda_items": ["Sprint progress", "Blockers", "Next week planning"],
+      "action_items": ["Code review by Friday", "Deploy to staging"]
+    }
+  },
+  {
+    "id": "audio_003",
+    "text": "Technology podcast episode about AI developments",
+    "image_path": null,
+    "audio_path": "input_dataset/audio_files/podcast_episode.wav",
+    "expected_type": "podcast",
+    "context": "Technology podcast episode about AI developments",
+    "expected_content": {
+      "audio_type": "podcast",
+      "host_names": ["Alex Chen"],
+      "guest_names": ["Dr. Maria Rodriguez"],
+      "topics_covered": ["Machine Learning", "AI Ethics", "Future of AI"],
+      "episode_summary": "Discussion about recent AI breakthroughs and ethical considerations"
+    }
+  },
+  {
+    "id": "audio_004",
+    "text": "Customer service call recording",
+    "image_path": null,
+    "audio_path": "input_dataset/audio_files/customer_call.wav",
+    "expected_type": "phone_call",
+    "context": "Customer service call recording",
+    "expected_content": {
+      "audio_type": "phone_call",
+      "speaker_count": 2,
+      "main_topics": ["Product support", "Technical issue", "Resolution"],
+      "overall_tone": "professional",
+      "sentiment": "positive"
+    }
+  },
+  {
+    "id": "audio_005",
+    "text": "University lecture on machine learning fundamentals",
+    "image_path": null,
+    "audio_path": "input_dataset/audio_files/lecture_excerpt.wav",
+    "expected_type": "lecture",
+    "context": "University lecture on machine learning fundamentals",
+    "expected_content": {
+      "audio_type": "lecture",
+      "speaker_count": 1,
+      "main_topics": ["Neural networks", "Deep learning", "Backpropagation"],
+      "mentioned_organizations": ["Stanford", "MIT"],
+      "overall_tone": "educational"
+    }
+  },
+  {
+    "id": "audio_006",
+    "text": "Job interview recording for software engineer position",
+    "image_path": null,
+    "audio_path": "input_dataset/audio_files/interview.wav",
+    "expected_type": "interview",
+    "context": "Job interview recording for software engineer position",
+    "expected_content": {
+      "audio_type": "interview",
+      "speaker_count": 3,
+      "main_topics": ["Technical skills", "Experience", "Company culture"],
+      "overall_tone": "professional",
+      "sentiment": "positive"
+    }
+  }
+]

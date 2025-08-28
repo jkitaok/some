@@ -1,6 +1,10 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, TYPE_CHECKING
+
+# Type checking import to avoid circular imports
+if TYPE_CHECKING:
+    from some.metrics import LLMMetricsCollector
 import time
 
 from some import BaseLanguageModel, register_language_model
@@ -17,6 +21,7 @@ class CustomLanguageModel(BaseLanguageModel):
         inputs: List[Dict[str, Any]],
         *,
         max_workers: Optional[int] = None,
+        metrics_collector: Optional["LLMMetricsCollector"] = None,
     ) -> Tuple[List[Dict[str, Any]], int, float]:
         """Generate simple mock responses."""
         start_time = time.time()
@@ -29,6 +34,11 @@ class CustomLanguageModel(BaseLanguageModel):
             time.sleep(0.01)
 
         total_inference_time = time.time() - start_time
+
+        # Automatically add inference time to metrics collector if provided
+        if metrics_collector is not None:
+            metrics_collector.add_inference_time(total_inference_time)
+
         return results, len(inputs), total_inference_time
     
     def _generate_single(self, payload: Dict[str, Any]) -> Dict[str, Any]:

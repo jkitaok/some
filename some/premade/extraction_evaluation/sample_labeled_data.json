@@ -1,0 +1,134 @@
+[
+  {
+    "id": "product_001",
+    "original_text": "The new iPhone 15 Pro is available for $999 with 128GB storage. It features a titanium design, A17 Pro chip, and improved camera system with 3x optical zoom. Available in Natural Titanium, Blue Titanium, White Titanium, and Black Titanium colors.",
+    "ground_truth": {
+      "name": "iPhone 15 Pro",
+      "price": 999.0,
+      "storage": "128GB",
+      "features": ["titanium design", "A17 Pro chip", "improved camera system", "3x optical zoom"],
+      "colors": ["Natural Titanium", "Blue Titanium", "White Titanium", "Black Titanium"],
+      "category": "smartphone"
+    },
+    "extraction_prompt": "Extract product information including name, price, storage, features, and available colors.",
+    "expected_schema": {
+      "name": "string",
+      "price": "number", 
+      "storage": "string",
+      "features": "array of strings",
+      "colors": "array of strings",
+      "category": "string"
+    },
+    "evaluation_context": "Focus on accurate price extraction and complete feature/color lists"
+  },
+  {
+    "id": "product_002", 
+    "original_text": "Samsung Galaxy S24 Ultra starts at $1,199 for the 256GB model. Key specs include a 6.8-inch Dynamic AMOLED display, Snapdragon 8 Gen 3 processor, quad-camera setup with 200MP main sensor, and S Pen support. Comes in Titanium Gray, Titanium Black, Titanium Violet, and Titanium Yellow.",
+    "ground_truth": {
+      "name": "Samsung Galaxy S24 Ultra",
+      "price": 1199.0,
+      "storage": "256GB",
+      "display": "6.8-inch Dynamic AMOLED",
+      "processor": "Snapdragon 8 Gen 3",
+      "camera": "quad-camera setup with 200MP main sensor",
+      "special_features": ["S Pen support"],
+      "colors": ["Titanium Gray", "Titanium Black", "Titanium Violet", "Titanium Yellow"],
+      "category": "smartphone"
+    },
+    "extraction_prompt": "Extract detailed product specifications including display, processor, camera, and special features.",
+    "expected_schema": {
+      "name": "string",
+      "price": "number",
+      "storage": "string", 
+      "display": "string",
+      "processor": "string",
+      "camera": "string",
+      "special_features": "array of strings",
+      "colors": "array of strings",
+      "category": "string"
+    },
+    "evaluation_context": "Pay attention to technical specifications accuracy and complete color options"
+  },
+  {
+    "id": "book_001",
+    "original_text": "\"The Midnight Library\" by Matt Haig is a philosophical fiction novel published in 2020. Priced at $16.99 for the hardcover edition, it explores themes of regret, possibility, and the meaning of life. The book has 288 pages and has won several awards including the Goodreads Choice Award for Fiction.",
+    "ground_truth": {
+      "title": "The Midnight Library",
+      "author": "Matt Haig",
+      "genre": "philosophical fiction",
+      "publication_year": 2020,
+      "price": 16.99,
+      "format": "hardcover",
+      "pages": 288,
+      "themes": ["regret", "possibility", "meaning of life"],
+      "awards": ["Goodreads Choice Award for Fiction"],
+      "category": "book"
+    },
+    "extraction_prompt": "Extract book information including title, author, genre, publication details, and awards.",
+    "expected_schema": {
+      "title": "string",
+      "author": "string", 
+      "genre": "string",
+      "publication_year": "number",
+      "price": "number",
+      "format": "string",
+      "pages": "number",
+      "themes": "array of strings",
+      "awards": "array of strings",
+      "category": "string"
+    },
+    "evaluation_context": "Ensure accurate extraction of numerical data (year, price, pages) and thematic content"
+  },
+  {
+    "id": "service_001",
+    "original_text": "Premium Cloud Storage Plan offers 2TB of secure storage for $9.99/month. Features include automatic backup, file versioning, advanced sharing controls, and 24/7 customer support. Compatible with Windows, Mac, iOS, and Android. Includes collaboration tools and admin dashboard for team management.",
+    "ground_truth": {
+      "name": "Premium Cloud Storage Plan",
+      "storage_amount": "2TB",
+      "price": 9.99,
+      "billing_period": "monthly",
+      "features": ["automatic backup", "file versioning", "advanced sharing controls", "24/7 customer support", "collaboration tools", "admin dashboard"],
+      "compatibility": ["Windows", "Mac", "iOS", "Android"],
+      "target_audience": "teams",
+      "category": "cloud service"
+    },
+    "extraction_prompt": "Extract service details including storage capacity, pricing, features, and platform compatibility.",
+    "expected_schema": {
+      "name": "string",
+      "storage_amount": "string",
+      "price": "number",
+      "billing_period": "string", 
+      "features": "array of strings",
+      "compatibility": "array of strings",
+      "target_audience": "string",
+      "category": "string"
+    },
+    "evaluation_context": "Focus on complete feature extraction and accurate pricing information"
+  },
+  {
+    "id": "event_001",
+    "original_text": "TechConf 2024 will be held on March 15-17, 2024 at the San Francisco Convention Center. Early bird tickets are $299 (regular $399). The conference features keynotes from industry leaders, 50+ technical sessions, networking events, and an expo hall with 100+ vendors. Topics include AI, cloud computing, cybersecurity, and DevOps.",
+    "ground_truth": {
+      "name": "TechConf 2024",
+      "dates": "March 15-17, 2024",
+      "location": "San Francisco Convention Center",
+      "early_bird_price": 299.0,
+      "regular_price": 399.0,
+      "features": ["keynotes from industry leaders", "50+ technical sessions", "networking events", "expo hall with 100+ vendors"],
+      "topics": ["AI", "cloud computing", "cybersecurity", "DevOps"],
+      "category": "conference"
+    },
+    "extraction_prompt": "Extract event information including dates, location, pricing, and key topics covered.",
+    "expected_schema": {
+      "name": "string",
+      "dates": "string",
+      "location": "string",
+      "early_bird_price": "number",
+      "regular_price": "number", 
+      "features": "array of strings",
+      "topics": "array of strings",
+      "category": "string"
+    },
+    "evaluation_context": "Verify accurate date parsing and complete topic/feature extraction"
+  }
+]

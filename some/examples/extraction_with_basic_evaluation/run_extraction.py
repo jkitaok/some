@@ -1,8 +1,8 @@
 """
-Simple Generic Product Extraction Example
+Generic Product Extraction with Basic Evaluation
 
-This demonstrates basic structured data extraction using the SOME library.
-No evaluation - just pure extraction functionality.
+This demonstrates structured data extraction with basic evaluation using the SOME library.
+Uses the premade BasicEvaluation for quality assessment without ground truth data.
 """
 from __future__ import annotations
 
@@ -13,6 +13,7 @@ from typing import Dict, Any, List
 from some.inference import get_language_model
 from some.metrics import LLMMetricsCollector
 from some.io import read_json
+from some.premade.extraction_evaluation import BasicEvaluation, EvaluationPrompt
 from .my_prompt import ProductPrompt
 
 
@@ -27,10 +28,73 @@ def load_dataset(dataset_path: str = "dataset.json") -> List[Dict[str, Any]]:
     return read_json(str(full_path))
 
 
+def run_basic_evaluation(inputs: List[Dict[str, Any]], results: List[Dict[str, Any]], lm, llm_collector: LLMMetricsCollector):
+    """Run basic evaluation using the premade BasicEvaluation structure."""
+    print("\n🔍 Running Basic Evaluation")
+    print("=" * 50)
+    
+    # Format records for basic evaluation
+    evaluation_records = []
+    for (input_data, result_data) in zip(inputs, results):
+        if result_data.get("product"):
+            evaluation_records.append({
+                "original_text": input_data["prompt_text"],
+                "extraction_prompt": "Extract ProductSpec as JSON from this text and adhere strictly to the schema.",
+                "expected_schema": input_data["response_format"].model_json_schema(),
+                "extraction_output": result_data["product"]
+            })
+    
+    if not evaluation_records:
+        print("❌ No successful extractions to evaluate")
+        return [], []
+    
+    # Build evaluation prompts using the premade EvaluationPrompt
+    evaluation_inputs = [EvaluationPrompt().build(record) for record in evaluation_records]
+    
+    # Run evaluations with automatic metrics collection
+    evaluation_results, _, eval_time = lm.generate(evaluation_inputs, metrics_collector=llm_collector)
+    
+    print(f"Basic Evaluation Results ({len(evaluation_records)} items):")
+    evaluation_data = []
+    
+    correct_count = 0
+    formatted_count = 0
+    
+    for i, r in enumerate(evaluation_results):
+        eval_result = r.get('evaluation_result')
+        if eval_result:
+            evaluation_data.append(eval_result)
+            
+            correct = eval_result.get('correct', False)
+            formatted = eval_result.get('formatted', False)
+            
+            if correct:
+                correct_count += 1
+            if formatted:
+                formatted_count += 1
+            
+            print(f"  Item {i+1}: Correct={'✅' if correct else '❌'}, Formatted={'✅' if formatted else '❌'}")
+            
+            # Show reasoning if available
+            reasoning = eval_result.get('reasoning', '')
+            if reasoning:
+                print(f"    Reasoning: {reasoning[:100]}...")
+        else:
+            print(f"  Item {i+1}: {r.get('error', 'No result')}")
+    
+    # Summary statistics
+    if evaluation_data:
+        print(f"\n📊 Basic Evaluation Summary:")
+        print(f"  Correct: {correct_count}/{len(evaluation_data)} ({correct_count/len(evaluation_data)*100:.1f}%)")
+        print(f"  Formatted: {formatted_count}/{len(evaluation_data)} ({formatted_count/len(evaluation_data)*100:.1f}%)")
+    
+    return evaluation_results, evaluation_data
+
+
 def main(dataset_path: str = "dataset.json"):
-    """Main function for running the extraction example."""
-    print("🚀 Generic Product Extraction")
-    print("=" * 40)
+    """Main function for running the extraction with basic evaluation."""
+    print("🚀 Generic Product Extraction with Basic Evaluation")
+    print("=" * 60)
     
     # Load dataset from JSON file
     try:
@@ -56,7 +120,7 @@ def main(dataset_path: str = "dataset.json"):
     
     # Setup metrics collection
     llm_collector = LLMMetricsCollector(
-        name="Product_Extraction",
+        name="Product_Extraction_with_BasicEval",
         cost_per_input_token=0.15/1000000,   # GPT-4o-mini pricing
         cost_per_output_token=0.6/1000000
     )
@@ -79,8 +143,11 @@ def main(dataset_path: str = "dataset.json"):
     
     print(f"\n✅ Successful extractions: {successful_extractions}/{len(results)}")
     
+    # Run basic evaluation
+    evaluation_results, evaluation_data = run_basic_evaluation(inputs, results, lm, llm_collector)
+    
     # Collect LLM performance metrics
-    llm_metrics = llm_collector.collect_metrics(results)
+    llm_metrics = llm_collector.collect_metrics(results + evaluation_results)
     
     print("\n" + "=" * 50)
     print("📈 LLM PERFORMANCE METRICS")
@@ -92,14 +159,17 @@ def main(dataset_path: str = "dataset.json"):
     print("=" * 50)
     print(f"Dataset items: {len(dataset)}")
     print(f"Successful extractions: {successful_extractions}/{len(results)} ({successful_extractions/len(results)*100:.1f}%)")
+    print(f"Total LLM calls: {llm_metrics['total_items']}")
     print(f"Total cost: ${llm_metrics['total_cost']:.6f}")
     print(f"Total time: {llm_metrics['total_inference_time']:.2f}s")
+    print(f"Evaluations completed: {len(evaluation_data)}")
 
-    print("\n🎉 Extraction completed successfully!")
+    print("\n🎉 Analysis completed successfully!")
     
     return {
         "dataset": dataset,
         "extraction_results": results,
+        "evaluation_results": evaluation_results,
         "llm_metrics": llm_metrics,
         "successful_extractions": successful_extractions
     }
@@ -108,7 +178,7 @@ def main(dataset_path: str = "dataset.json"):
 def parse_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
-        description="Run simple product extraction"
+        description="Run product extraction with basic evaluation"
     )
     parser.add_argument(
         "--dataset",
@@ -126,7 +196,7 @@ if __name__ == "__main__":
     print(f"  Dataset: {args.dataset}")
     print()
     
-    # Run extraction
+    # Run extraction with basic evaluation
     results = main(dataset_path=args.dataset)
     
     if results:

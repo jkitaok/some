@@ -1,16 +1,15 @@
 # SOME (Structured Object Media Extraction)
 
-A starter code template for LLM-powered structured object and media extraction with comprehensive metrics and analysis.
+A professional LLM framework for structured extraction from text, images, audio, and multimodal content with built-in evaluation and comprehensive metrics.
 
-## Features
+## ✨ Key Features
 
-- **Flexible LLM Integration**: Support for OpenAI API, local Ollama, or custom providers
-- **Schema-Based Extraction**: Use Pydantic models to define extraction schemas
-- **Media Support**: Handle text, images, and multimodal content
-- **Comprehensive Metrics**: Automatic analysis of extracted data with detailed statistics
-- **Batch Processing**: Efficient parallel processing of multiple items
-- **Starter Template**: Ready-to-use foundation for your extraction projects
-- **Type-Safe**: Full type hints and validation throughout
+- **🎯 Multimodal Support**: Extract from text, images, audio, and combined modalities
+- **🏗️ Modular Architecture**: Reusable `Prompt`, `LanguageModel`, `Schema`, and `Metrics` components
+- **📊 Built-in Evaluation**: Same constructs power both extraction and quality assessment
+- **🔧 Flexible LLM Integration**: OpenAI, Ollama, Instructor, or custom providers
+- **📈 Comprehensive Metrics**: Token usage, costs, timing, and schema-based analysis
+- **⚡ Production Ready**: Type-safe, batch processing, error handling
 
 ## Installation
 
@@ -18,49 +17,46 @@ A starter code template for LLM-powered structured object and media extraction w
 pip install -e .
 ```
 
-## 🚀 Quickstart
+## 🚀 Quick Demo
 
-Get up and running in 30 seconds! Run the complete example to see structured extraction in action:
+Experience multimodal extraction in 30 seconds:
 
-### Step 1: Set up your API key
 ```bash
-# Option 1: Copy and configure environment file
-cp .env.example .env
-# Edit .env and add your OpenAI API key
-
-# Option 2: Set environment variable directly
+# Set up API key
 export OPENAI_API_KEY=your_key_here
-```
 
-### Step 2: Run the example
-```bash
+# Run complete extraction + evaluation pipeline
 python -m some.examples.generic_extraction.run_extraction
 ```
 
-**What this does:**
-- ✅ Extracts product information from sample text using GPT
-- ✅ Evaluates extraction quality automatically
-- ✅ Shows comprehensive metrics and cost analysis
-- ✅ Demonstrates the complete pipeline with real LLM calls
+**What you'll see:**
+- 📄 Product extraction from text using structured schemas
+- 🔍 Automatic quality evaluation using the same building blocks
+- 📊 Comprehensive metrics: tokens, costs, timing, schema analysis
+- 🎯 End-to-end pipeline demonstrating all core constructs
 
-**Expected output:** You'll see extracted product data, quality evaluations, performance metrics, and cost analysis - everything you need to understand how SOME works!
+## 🏗️ Core Building Blocks
 
-## Quick Start
+SOME provides four key constructs that work together for both extraction and evaluation:
 
-### 1. Define Your Schema
-
+### 1. Schema - Define Structure
 ```python
-from pydantic import BaseModel
-from typing import List
+from pydantic import BaseModel, Field
 
 class Product(BaseModel):
-    name: str
-    price: float
-    features: List[str]
+    name: str = Field(description="Product name")
+    price: float = Field(description="Price in USD")
+    features: List[str] = Field(description="Key features")
+
+# Works for any domain - multimodal analysis, evaluations, etc.
+class MultiModalAnalysis(BaseModel):
+    content_type: str
+    visual_description: Optional[str] = None
+    audio_transcript: Optional[str] = None
+    confidence_score: float = Field(ge=0.0, le=1.0)
 ```
 
-### 2. Create a Prompt Builder
-
+### 2. Prompt - Build Requests
 ```python
 from some.prompting import BasePromptBuilder
 
@@ -68,48 +64,159 @@ class ProductPrompt(BasePromptBuilder):
     def build(self, item):
         return {
             "prompt_text": f"Extract product info: {item['text']}",
+            "image_path": item.get("image_path"),  # Multimodal support
             "response_format": Product,
             "result_key": "product"
         }
+
+# Same pattern for evaluation prompts
+class EvaluationPrompt(BasePromptBuilder):
+    def build(self, item):
+        return {
+            "prompt_text": f"Evaluate extraction quality: {item['extraction']}",
+            "response_format": BasicEvaluation,
+            "result_key": "evaluation"
+        }
 ```
 
-### 3. Run Extraction
-
+### 3. LanguageModel - Execute Requests
 ```python
 from some.inference import get_language_model
 
-# Set up data and model
-data = [{"text": "Widget X costs $19.99 with wifi and bluetooth"}]
-inputs = [ProductPrompt().build(item) for item in data]
+# Supports text, vision, and multimodal models
+lm = get_language_model(provider="openai", model="gpt-4o")  # Vision + text
+# lm = get_language_model(provider="ollama", model="llama3:8b")  # Local
 
-# Run extraction
-lm = get_language_model(provider="openai", model="gpt-5-nano")  # or "ollama"
-results, workers, timing = lm.generate(inputs)
-
-print(results[0]["product"])  # {"name": "Widget X", "price": 19.99, ...}
+# Batch processing with automatic metrics
+results, workers, timing = lm.generate(inputs, metrics_collector=collector)
 ```
 
-## LLM Providers
+### 4. Metrics - Analyze Results
+```python
+from some.metrics import LLMMetricsCollector, SchemaMetricsCollector
 
-**OpenAI (Recommended)**: Add your API key to `.env` file or `export OPENAI_API_KEY=your_key_here`
+# LLM performance metrics
+llm_collector = LLMMetricsCollector(name="extraction")
+llm_metrics = llm_collector.collect_metrics(results)
+# → tokens, costs, timing, success rates
 
-**Local Ollama (Free)**: Install from https://ollama.ai, then `ollama pull qwen3:4b-instruct`
+# Schema-based data quality metrics
+schema_collector = SchemaMetricsCollector(Product, "analysis")
+schema_metrics = schema_collector.collect_metrics(extracted_data)
+# → field completeness, type validation, statistical analysis
+```
 
-**Configuration**: Copy `.env.example` to `.env` and customize your settings
+## 🎭 Multimodal Capabilities
 
-## Examples & Documentation
+### Text + Vision + Audio
+```python
+# Analyze presentation slides with speaker audio
+data = {
+    "text": "Q3 Financial Results",
+    "image_path": "slides/q3_chart.png",
+    "audio_path": "audio/presentation.wav"
+}
 
-- **`some/examples/generic_extraction/`** - Complete working example (try the command above!)
-- **`some/examples/custom_llm_provider/`** - Custom provider implementation
-- **`some/examples/multimodal_extraction/`** - Media and multimodal content handling
-- **`docs/DEVELOPER_GUIDE.md`** - Build custom extraction pipelines
-- **`docs/SCHEMA_METRICS.md`** - Analyze extracted data quality
+# Single prompt handles all modalities
+prompt = MultiModalPrompt().build(data)
+results = lm.generate([prompt])
 
-## Getting Started with SOME
+# Rich analysis combining all inputs
+analysis = results[0]["analysis"]
+print(f"Content: {analysis.content_type}")
+print(f"Visual: {analysis.visual_description}")
+print(f"Audio: {analysis.audio_transcript}")
+print(f"Alignment: {analysis.modality_alignment}")
+```
 
-This template provides everything you need to build structured extraction systems:
+### Automatic Modality Detection
+```python
+# Framework automatically detects available modalities
+modalities = ["text", "vision", "audio"]
+prompt_builder = determine_prompt_builder(modalities)
 
-1. **Clone and customize** the schemas in `some/examples/`
-2. **Modify prompts** to match your specific extraction needs
-3. **Add your data sources** and run extractions
-4. **Analyze results** with built-in metrics and validation
+# Uses appropriate schema and processing
+if "vision" in modalities:
+    schema = VisionAudioAnalysis
+elif "audio" in modalities:
+    schema = TextAudioAnalysis
+else:
+    schema = TextOnlyAnalysis
+```
+
+## 🔍 Evaluation as a First-Class Feature
+
+The same building blocks power both extraction and evaluation:
+
+### Basic Quality Assessment
+```python
+from some.premade.extraction_evaluation import BasicEvaluation, EvaluationPrompt
+
+# Evaluate any extraction using the same constructs
+evaluation_data = {
+    "extraction": extracted_product,
+    "original_text": source_text,
+    "schema": Product
+}
+
+# Same prompt builder pattern
+eval_prompt = EvaluationPrompt().build(evaluation_data)
+eval_results = lm.generate([eval_prompt])
+
+assessment = eval_results[0]["evaluation"]
+print(f"Correct: {assessment.correct}")
+print(f"Reasoning: {assessment.reasoning}")
+```
+
+### Labeled Data Evaluation
+```python
+from some.premade.extraction_evaluation import LabeledEvaluation
+
+# Compare against ground truth
+labeled_eval = {
+    "extraction": extracted_data,
+    "ground_truth": expected_data,
+    "schema": MySchema
+}
+
+# Detailed metrics automatically calculated
+results = evaluate_against_labels(labeled_eval)
+print(f"Exact match: {results.exact_match}")
+print(f"Accuracy: {results.accuracy_score}")
+print(f"Missing fields: {results.missing_fields_count}")
+```
+
+## 🚀 Examples & LLM Providers
+
+### Ready-to-Run Examples
+- **`some/premade/`** - Production templates (extraction + evaluation)
+- **`some/examples/multimodal_extraction/`** - Text, vision, audio processing
+- **`some/examples/generic_extraction/`** - Complete pipeline demo
+
+### LLM Provider Support
+```bash
+# OpenAI (recommended for multimodal)
+export OPENAI_API_KEY=your_key_here
+
+# Local Ollama (free, vision support)
+ollama pull qwen3:4b-instruct
+
+# Instructor (structured output)
+pip install instructor
+```
+
+## 🎯 Why SOME?
+
+**Unified Architecture**: The same `Prompt`, `LanguageModel`, `Schema`, and `Metrics` constructs power extraction, evaluation, and analysis. No separate frameworks needed.
+
+**Multimodal by Design**: Handle text, images, audio, and combinations seamlessly. Automatic modality detection and cross-modal insights.
+
+**Production Ready**: Built-in error handling, batch processing, comprehensive metrics, and cost tracking. Type-safe throughout.
+
+**Evaluation Built-In**: Quality assessment uses the same building blocks as extraction. Easy to validate and improve your pipelines.
+
+---
+
+**Get started:** `python -m some.examples.generic_extraction.run_extraction`
+
+**Documentation:** `docs/DEVELOPER_GUIDE.md` | **Schema Analysis:** `docs/SCHEMA_METRICS.md`

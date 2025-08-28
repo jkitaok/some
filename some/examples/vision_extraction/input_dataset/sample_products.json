@@ -1,0 +1,68 @@
+[
+  {
+    "id": "product_001",
+    "text": "Latest smartphone model with advanced camera features",
+    "image_path": "input_dataset/images/smartphone_box.jpg",
+    "audio_path": null,
+    "expected_details": {
+      "name": "iPhone 15 Pro",
+      "brand": "Apple",
+      "category": "electronics",
+      "color": "Natural Titanium",
+      "key_features": ["Pro camera system", "Titanium design", "A17 Pro chip"]
+    }
+  },
+  {
+    "id": "product_002",
+    "text": "Premium coffee beans from local roaster",
+    "image_path": "input_dataset/images/coffee_bag.jpg",
+    "audio_path": null,
+    "expected_details": {
+      "name": "Ethiopian Single Origin Coffee",
+      "brand": "Blue Bottle Coffee",
+      "category": "food",
+      "material": "Whole beans",
+      "key_features": ["Single origin", "Light roast", "Organic"]
+    }
+  },
+  {
+    "id": "product_003",
+    "text": "Athletic footwear for running and training",
+    "image_path": "input_dataset/images/running_shoes.jpg",
+    "audio_path": null,
+    "expected_details": {
+      "name": "Air Max 270",
+      "brand": "Nike",
+      "category": "sports",
+      "color": "Black/White",
+      "size": "US 10",
+      "key_features": ["Air Max cushioning", "Breathable mesh", "Durable outsole"]
+    }
+  },
+  {
+    "id": "product_004",
+    "text": "Anti-aging serum with vitamin C",
+    "image_path": "input_dataset/images/skincare_bottle.jpg",
+    "audio_path": null,
+    "expected_details": {
+      "name": "Vitamin C Serum",
+      "brand": "The Ordinary",
+      "category": "beauty",
+      "packaging_type": "bottle",
+      "key_features": ["Vitamin C", "Anti-aging", "Brightening"]
+    }
+  },
+  {
+    "id": "product_005",
+    "text": "Bestselling novel from acclaimed author",
+    "image_path": "input_dataset/images/book_cover.jpg",
+    "audio_path": null,
+    "expected_details": {
+      "name": "The Seven Husbands of Evelyn Hugo",
+      "brand": "St. Martin's Press",
+      "category": "books",
+      "condition": "new",
+      "key_features": ["Fiction", "Bestseller", "Paperback"]
+    }
+  }
+]

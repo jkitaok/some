@@ -1,0 +1,92 @@
+[
+  {
+    "id": "product_001",
+    "text": "Widget X costs $19.99 and includes wifi, gps.",
+    "ground_truth": {
+      "name": "Widget X",
+      "price": 19.99,
+      "features": ["wifi", "gps"]
+    }
+  },
+  {
+    "id": "product_002",
+    "text": "Gadget Y is priced at $49.50, features: bluetooth, waterproofing",
+    "ground_truth": {
+      "name": "Gadget Y",
+      "price": 49.50,
+      "features": ["bluetooth", "waterproofing"]
+    }
+  },
+  {
+    "id": "product_003",
+    "text": "Device Z sells for $129.00 with premium materials and AI processing",
+    "ground_truth": {
+      "name": "Device Z",
+      "price": 129.00,
+      "features": ["premium materials", "AI processing"]
+    }
+  },
+  {
+    "id": "product_004",
+    "text": "The SuperPhone Pro Max retails for $899 and comes with 5G connectivity, wireless charging, face recognition, and a 108MP camera system.",
+    "ground_truth": {
+      "name": "SuperPhone Pro Max",
+      "price": 899.00,
+      "features": ["5G connectivity", "wireless charging", "face recognition", "108MP camera system"]
+    }
+  },
+  {
+    "id": "product_005",
+    "text": "Smart Watch Elite is available for $299.99. Key features include heart rate monitoring, GPS tracking, water resistance up to 50m, and 7-day battery life.",
+    "ground_truth": {
+      "name": "Smart Watch Elite",
+      "price": 299.99,
+      "features": ["heart rate monitoring", "GPS tracking", "water resistance up to 50m", "7-day battery life"]
+    }
+  },
+  {
+    "id": "product_006",
+    "text": "Gaming Laptop X1 costs $1,499 and features an RTX 4070 GPU, 16GB RAM, 1TB SSD, and RGB keyboard.",
+    "ground_truth": {
+      "name": "Gaming Laptop X1",
+      "price": 1499.00,
+      "features": ["RTX 4070 GPU", "16GB RAM", "1TB SSD", "RGB keyboard"]
+    }
+  },
+  {
+    "id": "product_007",
+    "text": "EcoFriendly Bottle priced at $24.95 includes BPA-free materials, double-wall insulation, and leak-proof design.",
+    "ground_truth": {
+      "name": "EcoFriendly Bottle",
+      "price": 24.95,
+      "features": ["BPA-free materials", "double-wall insulation", "leak-proof design"]
+    }
+  },
+  {
+    "id": "product_008",
+    "text": "The Wireless Headphones Pro are $179 and offer noise cancellation, 30-hour battery, quick charge, and premium sound quality.",
+    "ground_truth": {
+      "name": "Wireless Headphones Pro",
+      "price": 179.00,
+      "features": ["noise cancellation", "30-hour battery", "quick charge", "premium sound quality"]
+    }
+  },
+  {
+    "id": "product_009",
+    "text": "Home Security Camera costs $89.99 with night vision, motion detection, cloud storage, and mobile app control.",
+    "ground_truth": {
+      "name": "Home Security Camera",
+      "price": 89.99,
+      "features": ["night vision", "motion detection", "cloud storage", "mobile app control"]
+    }
+  },
+  {
+    "id": "product_010",
+    "text": "Electric Scooter Max sells for $649 and includes 25-mile range, foldable design, LED lights, and smartphone app.",
+    "ground_truth": {
+      "name": "Electric Scooter Max",
+      "price": 649.00,
+      "features": ["25-mile range", "foldable design", "LED lights", "smartphone app"]
+    }
+  }
+]

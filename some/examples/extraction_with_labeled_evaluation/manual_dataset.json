@@ -1,0 +1,14 @@
+[
+  {
+    "id": "product_001",
+    "text": "Widget X costs $19.99 and includes wifi, gps."
+  },
+  {
+    "id": "product_002",
+    "text": "Gadget Y is priced at $49.50, features: bluetooth, waterproofing"
+  },
+  {
+    "id": "product_003",
+    "text": "Device Z sells for $129.00 with premium materials and AI processing"
+  }
+]
